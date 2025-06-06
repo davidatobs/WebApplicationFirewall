@@ -1,12 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import joblib
 import re
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)  # Allow cross-origin requests (e.g., from browsers)
 
-# Load model and vectorizer
+# Load the trained model and vectorizer
 model = joblib.load("waf_model.pkl")
 vectorizer = joblib.load("vectorizer.pkl")
 
@@ -33,6 +33,10 @@ def predict():
         "prediction": prediction,
         "confidence": float(round(confidence, 4))
     })
+
+@app.route("/", methods=["GET"])
+def serve_demo():
+    return send_from_directory("static", "index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
