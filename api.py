@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import joblib
 import re
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Load model and vectorizer
 model = joblib.load("waf_model.pkl")
