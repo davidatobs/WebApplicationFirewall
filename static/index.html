@@ -66,7 +66,7 @@
         const data = await res.json();
         resultDiv.innerHTML = `
           <strong>Prediction:</strong> ${data.prediction}<br>
-          <strong>Confidence:</strong> ${data.confidence}
+          <strong>Confidence:</strong> ${(data.confidence * 100).to fixed(2)}%
         `;
       } catch (err) {
         resultDiv.innerHTML = "Error: Unable to reach API.";
