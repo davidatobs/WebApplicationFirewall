@@ -28,6 +28,10 @@ def predict():
     prediction = model.predict(vectorized)[0]
     confidence = model.predict_proba(vectorized).max()
 
+    # Manually boost confidence if an attack is detected
+    if prediction in ["SQLi", "XSS"]:
+        confidence = 1.0  # Override with full confidence for attacks
+
     return jsonify({
         "input": raw_text,
         "prediction": prediction,
